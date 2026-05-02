@@ -15,6 +15,10 @@ public function index()
 {
     $store = Auth::user()->stores->first();
 
+if (!$store) {
+    return redirect()->route('stores.create');
+}
+
     $todaySales = Sale::where('store_id', $store->id)
         ->whereDate('created_at', now())
         ->sum('total');
